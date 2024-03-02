@@ -1,14 +1,16 @@
-import React from 'react'
-import Navbar from '../coponents/navbar/Navbar'
-import Banner from '../coponents/banner/Banner'
-import JobList from '../coponents/joblist/JobList'
+import React, { lazy, Suspense } from 'react';
+import SpinLoad from '../coponents/spinner/SpinLoad';
+
+const LazyJobList = lazy(() => import('../coponents/joblist/JobList'));
+const LazyBanner = lazy(() => import('../coponents/banner/Banner'))
 
 export default function Home() {
   return (
     <div>
-      <Navbar></Navbar>
-      <Banner></Banner>
-      <JobList></JobList>
+      <Suspense fallback={<div className='flex justify-center'><SpinLoad></SpinLoad></div>}>
+      <LazyBanner></LazyBanner>
+        <LazyJobList />
+      </Suspense>
     </div>
-  )
+  );
 }
